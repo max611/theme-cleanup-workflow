@@ -1,0 +1,24 @@
+name: GitHub Actions to create RC branch
+on:
+  push:
+    branches:
+      - master
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Remove node_modules
+        uses: JesseTG/rm@v1.0.2
+        with:
+          path: ${{ github.workspace }}/node_modules
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - uses: dfm/force-push-branch-action@v1
+        with:
+          target-branch: "rc"
+          commit-message: "Committing automatically from GitHub Actions"
+          path: |
+            .
